@@ -1,0 +1,3 @@
+[submodule "aliyun-openapi-sdk-net-core"]
+	path = aliyun-openapi-sdk-net-core
+	url = https://github.com/VAllens/aliyun-openapi-sdk-net-core
