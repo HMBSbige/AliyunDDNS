@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AliyunDDNS", "AliyunDDNS\AliyunDDNS.csproj", "{A5216052-18BA-4E46-9F2D-B6546D61F28F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aliyun-net-sdk-core", "aliyun-openapi-sdk-net-core\src\aliyun-net-sdk-core\aliyun-net-sdk-core.csproj", "{1E7133D1-D66F-44F6-B621-3444CC788ABC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aliyun-net-sdk-alidns", "aliyun-openapi-sdk-net-core\src\aliyun-net-sdk-alidns\aliyun-net-sdk-alidns.csproj", "{6FA9C966-1594-4147-B476-518500578449}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5216052-18BA-4E46-9F2D-B6546D61F28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5216052-18BA-4E46-9F2D-B6546D61F28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5216052-18BA-4E46-9F2D-B6546D61F28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5216052-18BA-4E46-9F2D-B6546D61F28F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7133D1-D66F-44F6-B621-3444CC788ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7133D1-D66F-44F6-B621-3444CC788ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7133D1-D66F-44F6-B621-3444CC788ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7133D1-D66F-44F6-B621-3444CC788ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA9C966-1594-4147-B476-518500578449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA9C966-1594-4147-B476-518500578449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA9C966-1594-4147-B476-518500578449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA9C966-1594-4147-B476-518500578449}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21E7C0E5-33EF-47EA-B30E-66B53D6D0044}
+	EndGlobalSection
+EndGlobal
