@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
 using Aliyun.Acs.Core;
 using Aliyun.Acs.Core.Profile;
 using Aliyun.Acs.Alidns.Model.V20150109;
@@ -142,7 +146,29 @@ namespace AliyunDDNS
                 return @"";
             }
         }
-        
+
+        /// <summary>
+        /// 获取公网IPv4地址
+        /// </summary>
+        /// <returns>公网IPv4地址点分十进制字符串</returns>
+        public static string GetLocalIP()
+        {
+            string IP = @"0.0.0.0";
+            WebRequest wr = WebRequest.Create(@"https://myip.ipip.net/");
+            Stream s = wr.GetResponse().GetResponseStream();
+            if (s != null)
+            {
+                StreamReader sr = new StreamReader(s, Encoding.UTF8);
+                IP = sr.ReadToEnd();
+                int start = IP.IndexOf(@"当前 IP：", StringComparison.Ordinal) + 6;
+                int end = IP.IndexOf(@"  来自于：", start, StringComparison.Ordinal);
+                IP = IP.Substring(start, end - start);
+                sr.Close();
+                s.Close();
+            }
+            return IP;
+        }
+
         public static long Longnullable2long(long? z)
         {
             return z.HasValue ? z.GetValueOrDefault() : long.MinValue;
