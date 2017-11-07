@@ -9,12 +9,12 @@ using Aliyun.Acs.Alidns.Model.V20150109;
 
 namespace AliyunDDNS
 {
-    internal class AliyunDDNS
+    internal class DDNS
     {
         private const string regionId = @"cn-hangzhou";
         private readonly IAcsClient client;
 
-        public AliyunDDNS(string accessKeyId, string accessKeySecret)
+        public DDNS(string accessKeyId, string accessKeySecret)
         {
             IClientProfile profile = DefaultProfile.GetProfile(regionId, accessKeyId, accessKeySecret);
             // 若报Can not find endpoint to access异常，请添加以下此行代码

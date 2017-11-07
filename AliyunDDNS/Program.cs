@@ -20,11 +20,11 @@ namespace AliyunDDNS
 
         private static void Update(object state)
         {
-            var t1 = new AliyunDDNS(@"", @"");
+            var t1 = new DDNS(@"", @"");
 
             const string Domain = @"bige0.com";
             const string RR = @"school";
-            var Value = AliyunDDNS.GetLocalIP();
+            var Value = DDNS.GetLocalIP();
             if (Value == @"0.0.0.0")
             {
                 Console.WriteLine(@"IP 地址未改变");
