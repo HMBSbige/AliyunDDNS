@@ -11,6 +11,7 @@ namespace AliyunDDNSWindowsApp
         {
             InitializeComponent();
             Icon = Properties.Resources.huaji128;
+            notifyIcon1.Icon = Properties.Resources.huaji128;
             ChangeLogBox = UpdateLog;
             if (!File.Exists(configfile))
             {

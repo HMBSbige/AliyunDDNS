@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.NotifyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.显示隐藏ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +52,6 @@
             // notifyIcon1
             // 
             this.notifyIcon1.ContextMenuStrip = this.NotifyMenu;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "AliyunDDNS-WindowsApp";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
