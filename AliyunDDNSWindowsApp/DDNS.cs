@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Aliyun.Acs.Alidns.Model.V20150109;
 using Aliyun.Acs.Core;
 using Aliyun.Acs.Core.Profile;
-using Aliyun.Acs.Alidns.Model.V20150109;
 
-namespace AliyunDDNS
+namespace AliyunDDNSWindowsApp
 {
     public class DDNS
     {

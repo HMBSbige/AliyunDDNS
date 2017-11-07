@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\aliyun-openapi-sdk-net-core\src\aliyun-net-sdk-alidns\aliyun-net-sdk-alidns.csproj" />
-    <ProjectReference Include="..\aliyun-openapi-sdk-net-core\src\aliyun-net-sdk-core\aliyun-net-sdk-core.csproj" />
+    <ProjectReference Include="..\aliyun-openapi-sdk-net-core\src\aliyun-net-sdk-alidns\aliyun-net-sdk-alidns-net-core.csproj" />
+    <ProjectReference Include="..\aliyun-openapi-sdk-net-core\src\aliyun-net-sdk-core\aliyun-net-sdk-core-net-core.csproj" />
   </ItemGroup>
 
 </Project>

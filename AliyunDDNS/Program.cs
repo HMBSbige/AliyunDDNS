@@ -39,7 +39,7 @@ namespace AliyunDDNS
 
             if (lastValue != Value)
             {
-                if (t1.UpdateDomainRecord(@"school", @"bige0.com", Value) == lastRecordId &&
+                if (t1.UpdateDomainRecord(RR, Domain, Value) == lastRecordId &&
                     t1.GetSubDomainARecord(SubDomain) == Value)
                 {
                     Console.WriteLine(@"IP 地址更改成功");
