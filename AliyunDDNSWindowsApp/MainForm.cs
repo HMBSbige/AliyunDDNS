@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace AliyunDDNSWindowsApp
@@ -13,7 +14,7 @@ namespace AliyunDDNSWindowsApp
             ChangeLogBox = UpdateLog;
             if (!File.Exists(configfile))
             {
-                LogBox.AppendText(@"未找到配置文件" + Environment.NewLine);
+                UpdateLog(@"未找到配置文件" + Environment.NewLine);
             }
             else
             {
@@ -27,13 +28,14 @@ namespace AliyunDDNSWindowsApp
                 }
                 catch
                 {
-                    LogBox.AppendText(@"读取配置失败！" + Environment.NewLine);
+                    UpdateLog(@"读取配置失败！" + Environment.NewLine);
                     return;
                 }
-                LogBox.AppendText(@"读取配置成功！" + Environment.NewLine);
+                UpdateLog(@"读取配置成功！" + Environment.NewLine);
             }
         }
         public const string configfile = @"AliyunDDNSconfig.dat";
+        private const string logfile = @"AliyunDDNS.log";
         private const int second = 1000;
         private const int minute = 59 * second;
         private string Domain;
@@ -41,6 +43,7 @@ namespace AliyunDDNSWindowsApp
         private string accessKeyId, accessKeySecret;
         private readonly object thisLock = new object();
 
+        private StreamWriter log;
         private System.Threading.Timer threadTimer;
 
         private delegate void LogBoxCallBack(string str);
@@ -49,9 +52,23 @@ namespace AliyunDDNSWindowsApp
 
         private void UpdateLog(string str)
         {
-            LogBox.AppendText(str);
+            LogBox.AppendText(DateTime.Now + "\t" + str);
+            UpdateLogFile(DateTime.Now + "\t" + str);
         }
-
+        private void UpdateLogFile(string str)
+        {
+            try
+            {
+                log = new StreamWriter(logfile, true, Encoding.UTF8);
+            }
+            catch (Exception)
+            {
+                //MessageBox.Show(@"无法记录日志！" + Environment.NewLine + ex + Environment.NewLine, @"出错了",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            log?.Write(str);
+            log?.Close();
+        }
         private void TriggerMainFormDisplay()
         {
             Visible = !Visible;
@@ -87,7 +104,7 @@ namespace AliyunDDNSWindowsApp
                     return;
                 }
 
-                LogBox.Invoke(ChangeLogBox, DateTime.Now + "\t" + Value + "\t\t");
+                LogBox.Invoke(ChangeLogBox, @"公网 IP: "+ Value + Environment.NewLine);
 
                 var SubDomain = RR + @"." + Domain;
                 var lastValue = t1.GetSubDomainARecord(SubDomain);
