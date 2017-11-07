@@ -33,6 +33,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.NotifyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.显示隐藏ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TriggerRun_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LogBox = new System.Windows.Forms.TextBox();
@@ -45,7 +46,7 @@
             this.Domain_Box = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.TriggerRun_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button2 = new System.Windows.Forms.Button();
             this.NotifyMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,19 +71,26 @@
             // 显示隐藏ToolStripMenuItem
             // 
             this.显示隐藏ToolStripMenuItem.Name = "显示隐藏ToolStripMenuItem";
-            this.显示隐藏ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.显示隐藏ToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.显示隐藏ToolStripMenuItem.Text = "显示/隐藏";
             this.显示隐藏ToolStripMenuItem.Click += new System.EventHandler(this.显示隐藏ToolStripMenuItem_Click);
+            // 
+            // TriggerRun_MenuItem
+            // 
+            this.TriggerRun_MenuItem.Name = "TriggerRun_MenuItem";
+            this.TriggerRun_MenuItem.Size = new System.Drawing.Size(129, 22);
+            this.TriggerRun_MenuItem.Text = "Start";
+            this.TriggerRun_MenuItem.Click += new System.EventHandler(this.TriggerRun_MenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(126, 6);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
@@ -99,7 +107,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(455, 286);
+            this.button1.Location = new System.Drawing.Point(481, 321);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -146,7 +154,6 @@
             this.RR_Box.Name = "RR_Box";
             this.RR_Box.Size = new System.Drawing.Size(197, 21);
             this.RR_Box.TabIndex = 7;
-            this.RR_Box.Text = "school";
             // 
             // Domain_Box
             // 
@@ -154,7 +161,6 @@
             this.Domain_Box.Name = "Domain_Box";
             this.Domain_Box.Size = new System.Drawing.Size(197, 21);
             this.Domain_Box.TabIndex = 8;
-            this.Domain_Box.Text = "bige0.com";
             // 
             // label3
             // 
@@ -174,17 +180,22 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "主域名：";
             // 
-            // TriggerRun_MenuItem
+            // button2
             // 
-            this.TriggerRun_MenuItem.Name = "TriggerRun_MenuItem";
-            this.TriggerRun_MenuItem.Size = new System.Drawing.Size(152, 22);
-            this.TriggerRun_MenuItem.Text = "Start";
+            this.button2.Location = new System.Drawing.Point(481, 292);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "保存信息";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 356);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.Domain_Box);
@@ -224,6 +235,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem TriggerRun_MenuItem;
+        private System.Windows.Forms.Button button2;
     }
 }
 

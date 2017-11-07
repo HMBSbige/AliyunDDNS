@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace AliyunDDNSWindowsApp
@@ -10,7 +11,29 @@ namespace AliyunDDNSWindowsApp
             InitializeComponent();
             Icon = Properties.Resources.huaji128;
             ChangeLogBox = UpdateLog;
+            if (!File.Exists(configfile))
+            {
+                LogBox.AppendText(@"未找到配置文件" + Environment.NewLine);
+            }
+            else
+            {
+                try
+                {
+                    var config = Config.ReadConfig();
+                    Domain_Box.Text = config[0];
+                    RR_Box.Text = config[1];
+                    ID_Box.Text = config[2];
+                    Secret_Box.Text = config[3];
+                }
+                catch
+                {
+                    LogBox.AppendText(@"读取配置失败！" + Environment.NewLine);
+                    return;
+                }
+                LogBox.AppendText(@"读取配置成功！" + Environment.NewLine);
+            }
         }
+        public const string configfile = @"AliyunDDNSconfig.dat";
         private const int second = 1000;
         private const int minute = 59 * second;
         private string Domain;
@@ -64,7 +87,7 @@ namespace AliyunDDNSWindowsApp
                     return;
                 }
 
-                LogBox.Invoke(ChangeLogBox, DateTime.Now + ":\t" + Value + "\t");
+                LogBox.Invoke(ChangeLogBox, DateTime.Now + "\t" + Value + "\t\t");
 
                 var SubDomain = RR + @"." + Domain;
                 var lastValue = t1.GetSubDomainARecord(SubDomain);
@@ -102,6 +125,7 @@ namespace AliyunDDNSWindowsApp
             if (button1.Text == @"Start")
             {
                 button1.Enabled = false;
+                TriggerRun_MenuItem.Enabled = false;
 
                 accessKeyId = ID_Box.Text;
                 ID_Box.Enabled = false;
@@ -116,11 +140,14 @@ namespace AliyunDDNSWindowsApp
                 threadTimer = new System.Threading.Timer(Update, null, 0, 6 * minute);
 
                 button1.Text = @"Stop";
+                TriggerRun_MenuItem.Text = @"Stop";
                 button1.Enabled = true;
+                TriggerRun_MenuItem.Enabled = true;
             }
             else
             {
                 button1.Enabled = false;
+                TriggerRun_MenuItem.Enabled = false;
 
                 threadTimer?.Dispose();
                 LogBox.Invoke(ChangeLogBox, @"已停止..." + Environment.NewLine);
@@ -131,9 +158,30 @@ namespace AliyunDDNSWindowsApp
                 RR_Box.Enabled = true;
 
                 button1.Text = @"Start";
+                TriggerRun_MenuItem.Text = @"Start";
                 button1.Enabled = true;
+                TriggerRun_MenuItem.Enabled = true;              
             }
         }
+
+        private void TriggerRun_MenuItem_Click(object sender, EventArgs e)
+        {
+            TriggerRun();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Config.WriteConfig(Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text);
+            }
+            catch
+            {
+                LogBox.Invoke(ChangeLogBox, @"保存失败" + Environment.NewLine);
+            }
+            LogBox.Invoke(ChangeLogBox, @"保存成功" + Environment.NewLine);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             TriggerRun();
