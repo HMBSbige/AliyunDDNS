@@ -151,10 +151,14 @@ namespace AliyunDDNSWindowsApp
         /// 获取公网IPv4地址
         /// </summary>
         /// <returns>公网IPv4地址点分十进制字符串</returns>
-        public static string GetLocalIP()
+        public static string GetLocalIP(bool UseProxy)
         {
             string IP = @"0.0.0.0";
             WebRequest wr = WebRequest.Create(@"https://myip.ipip.net/");
+            if (!UseProxy)
+            {
+                wr.Proxy = new WebProxy();
+            }
             Stream s = wr.GetResponse().GetResponseStream();
             if (s != null)
             {

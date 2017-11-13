@@ -54,7 +54,10 @@ namespace AliyunDDNSWindowsApp
         private void UpdateLog(string str)
         {
             LogBox.AppendText(DateTime.Now + "\t" + str);
-            UpdateLogFile(DateTime.Now + "\t" + str);
+            if (checkBox2.Checked)
+            {
+                UpdateLogFile(DateTime.Now + "\t" + str);
+            }
         }
         private void UpdateLogFile(string str)
         {
@@ -98,7 +101,7 @@ namespace AliyunDDNSWindowsApp
             {
                 var t1 = new DDNS(accessKeyId, accessKeySecret);
 
-                var Value = DDNS.GetLocalIP();
+                var Value = DDNS.GetLocalIP(checkBox1.Checked);
                 if (Value == @"0.0.0.0")
                 {
                     LogBox.Invoke(ChangeLogBox, @"获取公网 IP 出错，解析记录未改变" + Environment.NewLine);
@@ -116,7 +119,7 @@ namespace AliyunDDNSWindowsApp
                     if (t1.UpdateDomainRecord(RR, Domain, Value) == lastRecordId &&
                         t1.GetSubDomainARecord(SubDomain) == Value)
                     {
-                        LogBox.Invoke(ChangeLogBox, @"解析记录更改成功" + Environment.NewLine);
+                        LogBox.Invoke(ChangeLogBox, @"解析记录更改成功:" + lastValue + @" → " + Value + Environment.NewLine);
                     }
                     else
                     {
@@ -196,8 +199,31 @@ namespace AliyunDDNSWindowsApp
             catch
             {
                 LogBox.Invoke(ChangeLogBox, @"保存失败" + Environment.NewLine);
+                return;
             }
             LogBox.Invoke(ChangeLogBox, @"保存成功" + Environment.NewLine);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (button1.Text == @"Stop")
+            {
+                button1.Enabled = false;
+                TriggerRun_MenuItem.Enabled = false;
+
+                threadTimer?.Dispose();
+                LogBox.Invoke(ChangeLogBox, @"已停止..." + Environment.NewLine);
+
+                ID_Box.Enabled = true;
+                Secret_Box.Enabled = true;
+                Domain_Box.Enabled = true;
+                RR_Box.Enabled = true;
+
+                button1.Text = @"Start";
+                TriggerRun_MenuItem.Text = @"Start";
+                button1.Enabled = true;
+                TriggerRun_MenuItem.Enabled = true;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
