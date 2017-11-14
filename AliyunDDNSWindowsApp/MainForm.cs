@@ -167,21 +167,7 @@ namespace AliyunDDNSWindowsApp
             }
             else
             {
-                button1.Enabled = false;
-                TriggerRun_MenuItem.Enabled = false;
-
-                threadTimer?.Dispose();
-                LogBox.Invoke(ChangeLogBox, @"已停止..." + Environment.NewLine);
-
-                ID_Box.Enabled = true;
-                Secret_Box.Enabled = true;
-                Domain_Box.Enabled = true;
-                RR_Box.Enabled = true;
-
-                button1.Text = @"Start";
-                TriggerRun_MenuItem.Text = @"Start";
-                button1.Enabled = true;
-                TriggerRun_MenuItem.Enabled = true;              
+                StopListen();
             }
         }
 
@@ -206,24 +192,35 @@ namespace AliyunDDNSWindowsApp
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = true;
+            TriggerMainFormDisplay();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
             if (button1.Text == @"Stop")
             {
-                button1.Enabled = false;
-                TriggerRun_MenuItem.Enabled = false;
-
-                threadTimer?.Dispose();
-                LogBox.Invoke(ChangeLogBox, @"已停止..." + Environment.NewLine);
-
-                ID_Box.Enabled = true;
-                Secret_Box.Enabled = true;
-                Domain_Box.Enabled = true;
-                RR_Box.Enabled = true;
-
-                button1.Text = @"Start";
-                TriggerRun_MenuItem.Text = @"Start";
-                button1.Enabled = true;
-                TriggerRun_MenuItem.Enabled = true;
+                StopListen();
             }
+        }
+
+        private void StopListen()
+        {
+            button1.Enabled = false;
+            TriggerRun_MenuItem.Enabled = false;
+
+            threadTimer?.Dispose();
+            LogBox.Invoke(ChangeLogBox, @"已停止..." + Environment.NewLine);
+
+            ID_Box.Enabled = true;
+            Secret_Box.Enabled = true;
+            Domain_Box.Enabled = true;
+            RR_Box.Enabled = true;
+
+            button1.Text = @"Start";
+            TriggerRun_MenuItem.Text = @"Start";
+            button1.Enabled = true;
+            TriggerRun_MenuItem.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
