@@ -145,25 +145,7 @@ namespace AliyunDDNSWindowsApp
         {
             if (button1.Text == @"Start")
             {
-                button1.Enabled = false;
-                TriggerRun_MenuItem.Enabled = false;
-
-                accessKeyId = ID_Box.Text;
-                ID_Box.Enabled = false;
-                accessKeySecret = Secret_Box.Text;
-                Secret_Box.Enabled = false;
-                Domain = Domain_Box.Text;
-                Domain_Box.Enabled = false;
-                RR = RR_Box.Text;
-                RR_Box.Enabled = false;
-
-                threadTimer?.Dispose();
-                threadTimer = new System.Threading.Timer(Update, null, 0, 6 * minute);
-
-                button1.Text = @"Stop";
-                TriggerRun_MenuItem.Text = @"Stop";
-                button1.Enabled = true;
-                TriggerRun_MenuItem.Enabled = true;
+                StartListen();
             }
             else
             {
@@ -192,8 +174,11 @@ namespace AliyunDDNSWindowsApp
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            TriggerMainFormDisplay();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                TriggerMainFormDisplay();
+            }
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -223,6 +208,28 @@ namespace AliyunDDNSWindowsApp
             TriggerRun_MenuItem.Enabled = true;
         }
 
+        private void StartListen()
+        {
+            button1.Enabled = false;
+            TriggerRun_MenuItem.Enabled = false;
+
+            accessKeyId = ID_Box.Text;
+            ID_Box.Enabled = false;
+            accessKeySecret = Secret_Box.Text;
+            Secret_Box.Enabled = false;
+            Domain = Domain_Box.Text;
+            Domain_Box.Enabled = false;
+            RR = RR_Box.Text;
+            RR_Box.Enabled = false;
+
+            threadTimer?.Dispose();
+            threadTimer = new System.Threading.Timer(Update, null, 0, 6 * minute);
+
+            button1.Text = @"Stop";
+            TriggerRun_MenuItem.Text = @"Stop";
+            button1.Enabled = true;
+            TriggerRun_MenuItem.Enabled = true;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             TriggerRun();
