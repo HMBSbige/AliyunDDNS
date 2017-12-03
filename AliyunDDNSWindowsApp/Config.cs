@@ -3,7 +3,7 @@ using System.Text;
 
 namespace AliyunDDNSWindowsApp
 {
-    internal static class Config
+    public static class Config
     {
         public static void WriteConfig(string Domain,string RR,string accessKeyId,string accessKeySecret)
         {
@@ -16,9 +16,9 @@ namespace AliyunDDNSWindowsApp
             }
         }
 
-        public static string[] ReadConfig()
+        public static string[] ReadConfig(string path)
         {
-            using (var br = new BinaryReader(File.Open(MainForm.configfile, FileMode.Open, FileAccess.Read, FileShare.Read), Encoding.UTF8))
+            using (var br = new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read), Encoding.UTF8))
             {
                 return new[] {br.ReadString(), br.ReadString(), br.ReadString(), br.ReadString()};
             }

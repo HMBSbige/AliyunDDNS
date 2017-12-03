@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AliyunDDNS", "AliyunDDNS\AliyunDDNS.csproj", "{A5216052-18BA-4E46-9F2D-B6546D61F28F}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aliyun-net-sdk-alidns", "aliyun-openapi-net-sdk\aliyun-net-sdk-alidns\aliyun-net-sdk-alidns.csproj", "{A3A305DD-6CB0-421B-8DC5-314B89C752B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aliyun-net-sdk-core", "aliyun-openapi-net-sdk\aliyun-net-sdk-core\aliyun-net-sdk-core.csproj", "{BB84CECB-295D-4772-A669-3726E511CCFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AliyunDDNS-WindowsService", "AliyunDDNS-WindowsService\AliyunDDNS-WindowsService.csproj", "{04C7F9CE-0441-4C9F-93EA-39514AA3FC2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BB84CECB-295D-4772-A669-3726E511CCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB84CECB-295D-4772-A669-3726E511CCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB84CECB-295D-4772-A669-3726E511CCFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04C7F9CE-0441-4C9F-93EA-39514AA3FC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04C7F9CE-0441-4C9F-93EA-39514AA3FC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04C7F9CE-0441-4C9F-93EA-39514AA3FC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04C7F9CE-0441-4C9F-93EA-39514AA3FC2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

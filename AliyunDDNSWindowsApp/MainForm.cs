@@ -21,7 +21,7 @@ namespace AliyunDDNSWindowsApp
             {
                 try
                 {
-                    var config = Config.ReadConfig();
+                    var config = Config.ReadConfig(configfile);
                     Domain_Box.Text = config[0];
                     RR_Box.Text = config[1];
                     ID_Box.Text = config[2];
@@ -36,7 +36,7 @@ namespace AliyunDDNSWindowsApp
             }
         }
         public const string configfile = @"AliyunDDNSconfig.dat";
-        private const string logfile = @"AliyunDDNS.log";
+        public const string logfile = @"AliyunDDNS.log";
         private const int second = 1000;
         private const int minute = 59 * second;
         private string Domain;
@@ -230,6 +230,12 @@ namespace AliyunDDNSWindowsApp
             button1.Enabled = true;
             TriggerRun_MenuItem.Enabled = true;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Service.Install();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             TriggerRun();
