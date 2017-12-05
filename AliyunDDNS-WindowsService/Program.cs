@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ServiceProcess;
 
 namespace AliyunDDNS_WindowsService
 {
@@ -14,8 +9,7 @@ namespace AliyunDDNS_WindowsService
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            var ServicesToRun = new ServiceBase[]
             {
                 new AliyunDDNS()
             };

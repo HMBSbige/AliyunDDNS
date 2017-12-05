@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.ServiceProcess;
-using System.Text;
 using AliyunDDNSWindowsApp;
 
 namespace AliyunDDNS_WindowsService
@@ -81,12 +80,11 @@ namespace AliyunDDNS_WindowsService
         protected override void OnStart(string[] args)
         {
             UpdateLogFile(@"服务启动");
-            
-            var config = Config.ReadConfig(args[0]);
-            Domain = config[0];
-            RR = config[1];
-            accessKeyId = config[2];
-            accessKeySecret = config[3];
+           
+            Domain = args[0];
+            RR = args[1];
+            accessKeyId = args[2];
+            accessKeySecret = args[3];
             
             threadTimer?.Dispose();
             threadTimer = new System.Threading.Timer(Update, null, 0, 6 * minute);

@@ -233,7 +233,23 @@ namespace AliyunDDNSWindowsApp
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Service.Install();
+            button3.Enabled = false;
+            Service.ReInstall();
+            button3.Enabled = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            button4.Enabled = false;
+            Service.UnInstall();
+            button4.Enabled = true;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            button5.Enabled = false;
+            Service.Run(new []{ Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text });
+            button5.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
