@@ -7,11 +7,11 @@ namespace AliyunDDNS_WindowsService
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
             var ServicesToRun = new ServiceBase[]
             {
-                new AliyunDDNS()
+                new AliyunDDNS(args)
             };
             ServiceBase.Run(ServicesToRun);
         }

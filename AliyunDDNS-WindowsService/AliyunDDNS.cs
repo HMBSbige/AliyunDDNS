@@ -1,15 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.ServiceProcess;
+using System.Text;
 using AliyunDDNSWindowsApp;
 
 namespace AliyunDDNS_WindowsService
 {
     public partial class AliyunDDNS : ServiceBase
     {
-        public AliyunDDNS()
+        public AliyunDDNS(IReadOnlyList<string> args)
         {
             InitializeComponent();
+            if (args.Count == 5)
+            {
+                Domain = args[0];
+                RR = args[1];
+                accessKeyId = args[2];
+                accessKeySecret = args[3];
+                logPath = args[4];
+            }
         }
         private System.Threading.Timer threadTimer;
         private const int second = 1000;
@@ -22,20 +32,20 @@ namespace AliyunDDNS_WindowsService
         private string accessKeySecret;
         
         private StreamWriter log;
+        private string logPath;
         
         private void UpdateLogFile(string str)
         {
-            //try
-            //{
-            //    log = new StreamWriter(@"AliyunDDNS.log", true, Encoding.UTF8);
-            //}
-            //catch (Exception)
-            //{
-            //    //MessageBox.Show(@"无法记录日志！" + Environment.NewLine + ex + Environment.NewLine, @"出错了",MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-            //log?.Write(str);
-            //log?.Close();
+            try
+            {
+                log = new StreamWriter(logPath, true, Encoding.UTF8);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            log?.Write(DateTime.Now + "\t" + str);
+            log?.Close();
         }
         
         private void Update(object state)
@@ -79,20 +89,22 @@ namespace AliyunDDNS_WindowsService
         
         protected override void OnStart(string[] args)
         {
-            UpdateLogFile(@"服务启动");
-           
-            Domain = args[0];
-            RR = args[1];
-            accessKeyId = args[2];
-            accessKeySecret = args[3];
-            
+            UpdateLogFile(@"服务启动" + Environment.NewLine);
+            if (args.Length == 5)
+            {
+                Domain = args[0];
+                RR = args[1];
+                accessKeyId = args[2];
+                accessKeySecret = args[3];
+                logPath = args[4];
+            }
             threadTimer?.Dispose();
             threadTimer = new System.Threading.Timer(Update, null, 0, 6 * minute);
         }
 
         protected override void OnStop()
         {
-            UpdateLogFile(@"服务停止");
+            UpdateLogFile(@"服务停止" + Environment.NewLine);
             threadTimer?.Dispose();
             threadTimer = null;
         }

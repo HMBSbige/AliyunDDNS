@@ -4,6 +4,7 @@ using System.IO;
 using System.ServiceProcess;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace AliyunDDNSWindowsApp
 {
@@ -12,25 +13,18 @@ namespace AliyunDDNSWindowsApp
         private static readonly string sysDisk = Environment.SystemDirectory.Substring(0, 3);
         private static readonly string dotNetPath = sysDisk + @"WINDOWS\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe";
         private const string dotNetPath1 = @"%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\installutil.exe";
-        private static readonly string serviceEXEPath = Application.StartupPath + @"\AliyunDDNS-WindowsService.exe";
+        private static readonly string serviceEXEPath = @"""" + Application.StartupPath + @"\AliyunDDNS-WindowsService.exe""";
         private static readonly string serviceInstallCommand = $@"{dotNetPath1}  {serviceEXEPath}";
         private static readonly string serviceUninstallCommand = $@"{dotNetPath1} -U {serviceEXEPath}";
         private const string servicename = @"AliyunDDNS";
 
         private static void Install()
         {
-            try
+            if (File.Exists(dotNetPath))
             {
-                if (File.Exists(dotNetPath))
-                {
-                    string[] cmd =  { serviceInstallCommand };
-                    Cmd(cmd);
-                    CloseProcess(@"cmd.exe");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string[] cmd =  { serviceInstallCommand };
+                Cmd(cmd);
+                CloseProcess(@"cmd.exe");
             }
         }
 
@@ -43,40 +37,44 @@ namespace AliyunDDNSWindowsApp
 
         public static void UnInstall()
         {
-            try
+            if (File.Exists(dotNetPath))
             {
-                if (File.Exists(dotNetPath))
-                {
-                    string[] cmd = { serviceUninstallCommand };
-                    Cmd(cmd);
-                    CloseProcess(@"cmd.exe");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string[] cmd = { serviceUninstallCommand };
+                Cmd(cmd);
+                CloseProcess(@"cmd.exe");
             }
         }
 
-        public static void Run(string[] args)
+        public static void Run()
         {
-            try
+            ServiceController sc = new ServiceController(servicename);
+                
+            if (sc.Status != ServiceControllerStatus.Running && 
+                sc.Status != ServiceControllerStatus.StartPending)
             {
-                Thread.Sleep(3000);
+                sc.Start();
+            }
+            sc.Refresh();
+        }
 
-                ServiceController sc = new ServiceController(servicename);
+        public static void AutoStartup(string[] args)
+        {
+            RegistryKey ServicePath = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\AliyunDDNS",true);
+            ServicePath.SetValue(@"ImagePath", serviceEXEPath + @" """ + args[0] + @""" """ + args[1] + @""" """ + args[2] + @""" """ + args[3] + @""" """ + args[4] + @"""", RegistryValueKind.ExpandString);
+            ServicePath.SetValue(@"Start", 2, RegistryValueKind.DWord);
+        }
 
-                if (sc.Status.Equals(ServiceControllerStatus.Stopped) ||
-                    sc.Status.Equals(ServiceControllerStatus.StopPending))
+        public static bool ServiceIsExisted()
+        {
+            ServiceController[] services = ServiceController.GetServices();
+            foreach (ServiceController s in services)
+            {
+                if (s.ServiceName == servicename)
                 {
-                    sc.Start(args);
+                    return true;
                 }
-                sc.Refresh();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            return false;
         }
         
         /// <summary>
@@ -120,14 +118,14 @@ namespace AliyunDDNSWindowsApp
         private static bool CloseProcess(string ProcName)
         {
             bool result = false;
-            System.Collections.ArrayList procList = new System.Collections.ArrayList();
-            foreach (System.Diagnostics.Process thisProc in System.Diagnostics.Process.GetProcesses())
+            //System.Collections.ArrayList procList = new System.Collections.ArrayList();
+            foreach (Process thisProc in Process.GetProcesses())
             {
                 var tempName = thisProc.ToString();
                 var begpos = tempName.IndexOf(@"(", StringComparison.Ordinal) + 1;
                 var endpos = tempName.IndexOf(@")", StringComparison.Ordinal);
                 tempName = tempName.Substring(begpos, endpos - begpos);
-                procList.Add(tempName);
+                //procList.Add(tempName);
                 if (tempName == ProcName)
                 {
                     if (!thisProc.CloseMainWindow())

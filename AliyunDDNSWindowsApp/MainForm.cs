@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using AliyunDDNSWindowsApp.Properties;
+using Timer = System.Threading.Timer;
 
 namespace AliyunDDNSWindowsApp
 {
@@ -10,9 +13,10 @@ namespace AliyunDDNSWindowsApp
         public MainForm()
         {
             InitializeComponent();
-            Icon = Properties.Resources.huaji128;
-            notifyIcon1.Icon = Properties.Resources.huaji128;
+            Icon = Resources.huaji128;
+            notifyIcon1.Icon = Resources.huaji128;
             ChangeLogBox = UpdateLog;
+            checkBox2.Checked = false;
             if (!File.Exists(configfile))
             {
                 UpdateLog(@"未找到配置文件" + Environment.NewLine);
@@ -34,9 +38,10 @@ namespace AliyunDDNSWindowsApp
                 }
                 UpdateLog(@"读取配置成功！" + Environment.NewLine);
             }
+            checkBox2.Checked = true;
         }
         public const string configfile = @"AliyunDDNSconfig.dat";
-        public const string logfile = @"AliyunDDNS.log";
+        private const string logfile = @"AliyunDDNS.log";
         private const int second = 1000;
         private const int minute = 59 * second;
         private string Domain;
@@ -45,7 +50,7 @@ namespace AliyunDDNSWindowsApp
         private readonly object thisLock = new object();
 
         private StreamWriter log;
-        private System.Threading.Timer threadTimer;
+        private Timer threadTimer;
 
         private delegate void LogBoxCallBack(string str);
 
@@ -176,8 +181,21 @@ namespace AliyunDDNSWindowsApp
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                e.Cancel = true;
-                TriggerMainFormDisplay();
+                var dr = MessageBox.Show(@"「是」退出，「否」最小化", @"是否退出？", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    Dispose();
+                    Application.Exit();
+                }
+                else if (dr == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    TriggerMainFormDisplay();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 
@@ -223,35 +241,82 @@ namespace AliyunDDNSWindowsApp
             RR_Box.Enabled = false;
 
             threadTimer?.Dispose();
-            threadTimer = new System.Threading.Timer(Update, null, 0, 6 * minute);
+            threadTimer = new Timer(Update, null, 0, 6 * minute);
 
             button1.Text = @"Stop";
             TriggerRun_MenuItem.Text = @"Stop";
             button1.Enabled = true;
             TriggerRun_MenuItem.Enabled = true;
         }
-
+        
+        private delegate void VoidMethod_Delegate();
+        
         private void button3_Click(object sender, EventArgs e)
         {
-            button3.Enabled = false;
-            Service.ReInstall();
-            button3.Enabled = true;
+            try
+            {
+                button3.Enabled = false;
+                Task t = new Task(() =>
+                {
+                    Service.ReInstall();
+                    Service.AutoStartup(new[] { Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text, Application.StartupPath + @"\" + logfile });
+                    Service.Run();
+                });
+                t.Start();
+                t.ContinueWith(task =>
+                {
+                    BeginInvoke(new VoidMethod_Delegate(() =>
+                    {
+                        if (Service.ServiceIsExisted())
+                        {
+                            MessageBox.Show(@"Windows 服务安装成功，并且已设置开机自启动", @"成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(@"Windows 服务安装失败", @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        button3.Enabled = true;
+                    }));
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            button4.Enabled = false;
-            Service.UnInstall();
-            button4.Enabled = true;
+            try
+            {
+                button4.Enabled = false;
+                Task t = new Task(() =>
+                {
+                    BeginInvoke(new VoidMethod_Delegate(Service.UnInstall));
+                });
+                t.Start();
+                t.ContinueWith(task =>
+                {
+                    BeginInvoke(new VoidMethod_Delegate(() =>
+                    {
+                        if (!Service.ServiceIsExisted())
+                        {
+                            MessageBox.Show(@"Windows 服务卸载成功", @"成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(@"Windows 服务卸载失败", @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        button4.Enabled = true;
+                    }));
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            button5.Enabled = false;
-            Service.Run(new []{ Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text });
-            button5.Enabled = true;
-        }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             TriggerRun();
