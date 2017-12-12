@@ -64,6 +64,28 @@ namespace AliyunDDNSWindowsApp
             ServicePath.SetValue(@"Start", 2, RegistryValueKind.DWord);
         }
 
+		public static void SetRecoveryOptions()
+		{
+			//sc failure "AliyunDDNS" reset= 0 actions= restart/60000
+			int exitCode;
+			using (var process = new Process())
+			{
+				var startInfo = process.StartInfo;
+				startInfo.FileName = @"sc";
+				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                
+				startInfo.Arguments = $@"failure ""{servicename}"" reset= 0 actions= restart/60000";
+
+				process.Start();
+				process.WaitForExit();
+
+				exitCode = process.ExitCode;
+			}
+
+			if (exitCode != 0)
+				throw new InvalidOperationException();
+		}
+		
         public static bool ServiceIsExisted()
         {
             ServiceController[] services = ServiceController.GetServices();

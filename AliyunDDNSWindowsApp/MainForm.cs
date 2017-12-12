@@ -260,6 +260,7 @@ namespace AliyunDDNSWindowsApp
                 {
                     Service.ReInstall();
                     Service.AutoStartup(new[] { Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text, Application.StartupPath + @"\" + logfile });
+                    Service.SetRecoveryOptions();
                     Service.Run();
                 });
                 t.Start();
