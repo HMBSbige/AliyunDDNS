@@ -291,10 +291,7 @@ namespace AliyunDDNSWindowsApp
 			try
 			{
 				button4.Enabled = false;
-				Task t = new Task(() =>
-				{
-					BeginInvoke(new VoidMethod_Delegate(Service.UnInstall));
-				});
+				var t = new Task(Service.UnInstall);
 				t.Start();
 				t.ContinueWith(task =>
 				{
