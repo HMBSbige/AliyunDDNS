@@ -44,25 +44,88 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="aliyun-net-sdk-core, Version=1.1.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\aliyun-net-sdk-core.1.1.12\lib\netstandard2.0\aliyun-net-sdk-core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alicore\AcsError.cs" />
+    <Compile Include="Alicore\AcsRequest.cs" />
+    <Compile Include="Alicore\AcsResponse.cs" />
+    <Compile Include="Alicore\Auth\AcsURLEncoder.cs" />
+    <Compile Include="Alicore\Auth\AlibabaCloudCredentials.cs" />
+    <Compile Include="Alicore\Auth\AlibabaCloudCredentialsProvider.cs" />
+    <Compile Include="Alicore\Auth\BasicCredentials.cs" />
+    <Compile Include="Alicore\Auth\BasicSessionCredentials.cs" />
+    <Compile Include="Alicore\Auth\Credential.cs" />
+    <Compile Include="Alicore\Auth\CredentialsBackupCompatibilityAdaptor.cs" />
+    <Compile Include="Alicore\Auth\ECSMetadataServiceCredentialsFetcher.cs" />
+    <Compile Include="Alicore\Auth\HmacSHA1Signer.cs" />
+    <Compile Include="Alicore\Auth\ICredentialProvider.cs" />
+    <Compile Include="Alicore\Auth\InstanceProfileCredentials.cs" />
+    <Compile Include="Alicore\Auth\InstanceProfileCredentialsProvider.cs" />
+    <Compile Include="Alicore\Auth\ISignatureComposer.cs" />
+    <Compile Include="Alicore\Auth\ISigner.cs" />
+    <Compile Include="Alicore\Auth\KeyPairCredentials.cs" />
+    <Compile Include="Alicore\Auth\LegacyCredentials.cs" />
+    <Compile Include="Alicore\Auth\RoaSignatureComposer.cs" />
+    <Compile Include="Alicore\Auth\RpcSignatureComposer.cs" />
+    <Compile Include="Alicore\Auth\SHA256withRSASigner.cs" />
+    <Compile Include="Alicore\Auth\ShaHmac1.cs" />
+    <Compile Include="Alicore\Auth\ShaHmac256.cs" />
+    <Compile Include="Alicore\Auth\Signer.cs" />
+    <Compile Include="Alicore\Auth\StaticCredentialsProvider.cs" />
+    <Compile Include="Alicore\Auth\STSAssumeRoleSessionCredentialsProvider.cs" />
+    <Compile Include="Alicore\Auth\Sts\AssumeRoleRequest.cs" />
+    <Compile Include="Alicore\Auth\Sts\AssumeRoleResponse.cs" />
+    <Compile Include="Alicore\Auth\Sts\AssumeRoleResponseUnmarshaller.cs" />
+    <Compile Include="Alicore\Auth\Sts\GetSessionAccessKeyRequest.cs" />
+    <Compile Include="Alicore\Auth\Sts\GetSessionAccessKeyResponse.cs" />
+    <Compile Include="Alicore\Auth\Sts\GetSessionAccessKeyResponseUnmarshaller.cs" />
+    <Compile Include="Alicore\CommonRequest.cs" />
+    <Compile Include="Alicore\CommonResponse.cs" />
+    <Compile Include="Alicore\CommonRoaRequest.cs" />
+    <Compile Include="Alicore\CommonRpcRequest.cs" />
+    <Compile Include="Alicore\DefaultAcsClient.cs" />
+    <Compile Include="Alicore\Exceptions\ClientException.cs" />
+    <Compile Include="Alicore\Exceptions\ErrorType.cs" />
+    <Compile Include="Alicore\Exceptions\ServerException.cs" />
+    <Compile Include="Alicore\Http\FormatType.cs" />
+    <Compile Include="Alicore\Http\HttpRequest.cs" />
+    <Compile Include="Alicore\Http\HttpResponse.cs" />
+    <Compile Include="Alicore\Http\MethodType.cs" />
+    <Compile Include="Alicore\Http\PositionType.cs" />
+    <Compile Include="Alicore\Http\ProtocolType.cs" />
+    <Compile Include="Alicore\IAcsClient.cs" />
+    <Compile Include="Alicore\Profile\DefaultProfile.cs" />
+    <Compile Include="Alicore\Profile\IClientProfile.cs" />
+    <Compile Include="Alicore\Reader\IReader.cs" />
+    <Compile Include="Alicore\Reader\JsonReader.cs" />
+    <Compile Include="Alicore\Reader\ReaderFactory.cs" />
+    <Compile Include="Alicore\Reader\XmlReader.cs" />
+    <Compile Include="Alicore\Regions\DescribeEndpointService.cs" />
+    <Compile Include="Alicore\Regions\DescribeEndpointServiceImpl.cs" />
+    <Compile Include="Alicore\Regions\Endpoint.cs" />
+    <Compile Include="Alicore\Regions\IEndpointsProvider.cs" />
+    <Compile Include="Alicore\Regions\InternalEndpointsParser.cs" />
+    <Compile Include="Alicore\Regions\Location\LocationConfig.cs" />
+    <Compile Include="Alicore\Regions\Location\Model\DescribeEndpointRequest.cs" />
+    <Compile Include="Alicore\Regions\Location\Model\DescribeEndpointResponse.cs" />
+    <Compile Include="Alicore\Regions\Location\Transform\DescribeEndpointResponseUnmarshaller.cs" />
+    <Compile Include="Alicore\Regions\ProductDomain.cs" />
+    <Compile Include="Alicore\Regions\RemoteEndpointsParser.cs" />
+    <Compile Include="Alicore\RoaAcsRequest.cs" />
+    <Compile Include="Alicore\RpcAcsRequest.cs" />
+    <Compile Include="Alicore\Transform\AcsErrorUnmarshaller.cs" />
+    <Compile Include="Alicore\Transform\UnmarshallerContext.cs" />
+    <Compile Include="Alicore\Utils\CacheTimeHelper.cs" />
+    <Compile Include="Alicore\Utils\DateTimeExtensions.cs" />
+    <Compile Include="Alicore\Utils\DictionaryUtil.cs" />
+    <Compile Include="Alicore\Utils\ParameterHelper.cs" />
     <Compile Include="Alidns\Model\V20150109\AddBatchDomainRecordsRequest.cs" />
     <Compile Include="Alidns\Model\V20150109\AddBatchDomainRecordsResponse.cs" />
     <Compile Include="Alidns\Model\V20150109\AddDomainGroupRequest.cs" />
@@ -199,7 +262,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -215,6 +277,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\huaji128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Alicore\ChangeLog.txt" />
+    <Content Include="Alicore\Regions\endpoints.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -48,9 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AliyunDDNS.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="AliyunDDNS.cs" />
     <Compile Include="AliyunDDNS.Designer.cs">
       <DependentUpon>AliyunDDNS.cs</DependentUpon>
     </Compile>
