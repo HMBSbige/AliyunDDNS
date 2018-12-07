@@ -37,7 +37,7 @@ namespace AliyunDDNS_WindowsService
 
 		private void UpdateLog(string str)
 		{
-			File.AppendAllText(logPath, str, Encoding.UTF8);
+			File.AppendAllText(logPath, $@"{DateTime.Now}	{str}{Environment.NewLine}", Encoding.UTF8);
 		}
 
 		private void Update(object state)
@@ -80,7 +80,7 @@ namespace AliyunDDNS_WindowsService
 
 		protected override void OnStart(string[] args)
 		{
-			UpdateLog(@"服务启动" + Environment.NewLine);
+			UpdateLog(@"服务启动");
 			if (args.Length == 5)
 			{
 				Domain = args[0];
@@ -95,7 +95,7 @@ namespace AliyunDDNS_WindowsService
 
 		protected override void OnStop()
 		{
-			UpdateLog(@"服务停止" + Environment.NewLine);
+			UpdateLog(@"服务停止");
 			threadTimer?.Dispose();
 			threadTimer = null;
 		}
