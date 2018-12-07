@@ -17,13 +17,7 @@
  * under the License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aliyun.Acs.Core.Http;
-
-namespace Aliyun.Acs.Core
+namespace AliyunDDNSWindowsApp.Alicore
 {
     public class CommonResponse : AcsResponse
     {

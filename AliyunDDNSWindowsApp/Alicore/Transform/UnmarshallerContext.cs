@@ -16,12 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Http;
-using Aliyun.Acs.Core.Utils;
+
 using System;
 using System.Collections.Generic;
+using AliyunDDNSWindowsApp.Alicore.Http;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Transform
+namespace AliyunDDNSWindowsApp.Alicore.Transform
 {
     public class UnmarshallerContext
     {

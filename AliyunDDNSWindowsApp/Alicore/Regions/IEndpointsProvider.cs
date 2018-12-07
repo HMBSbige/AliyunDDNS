@@ -18,10 +18,10 @@
  */
 
 using System;
-using Aliyun.Acs.Core.Auth;
-using Aliyun.Acs.Core.Regions.Location;
+using AliyunDDNSWindowsApp.Alicore.Auth;
+using AliyunDDNSWindowsApp.Alicore.Regions.Location;
 
-namespace Aliyun.Acs.Core.Regions
+namespace AliyunDDNSWindowsApp.Alicore.Regions
 {
     interface IEndpointsProvider
     {

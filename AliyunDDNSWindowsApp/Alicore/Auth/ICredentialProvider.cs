@@ -17,7 +17,7 @@
  * under the License.
  */
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public interface ICredentialProvider
     {

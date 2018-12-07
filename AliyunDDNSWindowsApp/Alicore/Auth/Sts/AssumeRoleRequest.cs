@@ -16,11 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- 
-using System;
-using Aliyun.Acs.Core.Utils;
 
-namespace Aliyun.Acs.Core.Auth.Sts
+using System;
+using AliyunDDNSWindowsApp.Alicore.Transform;
+using AliyunDDNSWindowsApp.Alicore.Utils;
+
+namespace AliyunDDNSWindowsApp.Alicore.Auth.Sts
 {
     public class AssumeRoleRequest : RpcAcsRequest<AssumeRoleResponse>
     {
@@ -86,7 +87,7 @@ namespace Aliyun.Acs.Core.Auth.Sts
             }
         }
 
-        public override AssumeRoleResponse GetResponse(Core.Transform.UnmarshallerContext unmarshallerContext)
+        public override AssumeRoleResponse GetResponse(UnmarshallerContext unmarshallerContext)
         {
             return AssumeRoleResponseUnmarshaller.Unmarshall(unmarshallerContext);
         }

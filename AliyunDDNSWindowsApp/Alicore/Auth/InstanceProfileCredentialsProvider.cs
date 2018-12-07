@@ -16,11 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- 
-using System;
-using Aliyun.Acs.Core.Exceptions;
 
-namespace Aliyun.Acs.Core.Auth
+using System;
+using AliyunDDNSWindowsApp.Alicore.Exceptions;
+
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class InstanceProfileCredentialsProvider : AlibabaCloudCredentialsProvider
     {

@@ -16,9 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using System.Collections.Generic;
 
-namespace Aliyun.Acs.Core.Utils
+namespace AliyunDDNSWindowsApp.Alicore.Utils
 {
     public class DictionaryUtil
     {

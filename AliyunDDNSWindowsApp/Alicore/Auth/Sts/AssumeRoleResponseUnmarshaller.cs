@@ -17,9 +17,9 @@
  * under the License.
  */
 
-using Aliyun.Acs.Core.Transform;
+using AliyunDDNSWindowsApp.Alicore.Transform;
 
-namespace Aliyun.Acs.Core.Auth.Sts
+namespace AliyunDDNSWindowsApp.Alicore.Auth.Sts
 {
     public class AssumeRoleResponseUnmarshaller
     {

@@ -16,11 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Utils;
+
 using System;
 using System.Collections.Generic;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Http
+namespace AliyunDDNSWindowsApp.Alicore.Http
 {
 
     public class HttpRequest

@@ -1,7 +1,7 @@
-﻿using Aliyun.Acs.Alidns.Model.V20150109;
-using Aliyun.Acs.Core;
-using Aliyun.Acs.Core.Profile;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AliyunDDNSWindowsApp.Alicore;
+using AliyunDDNSWindowsApp.Alicore.Profile;
+using AliyunDDNSWindowsApp.Alidns.Model.V20150109;
 
 namespace AliyunDDNSWindowsApp
 {

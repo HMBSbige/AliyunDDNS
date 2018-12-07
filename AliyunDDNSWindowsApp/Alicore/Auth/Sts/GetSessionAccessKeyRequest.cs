@@ -18,9 +18,10 @@
  */
 
 using System;
-using Aliyun.Acs.Core.Utils;
+using AliyunDDNSWindowsApp.Alicore.Transform;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Auth.Sts
+namespace AliyunDDNSWindowsApp.Alicore.Auth.Sts
 {
     class GetSessionAccessKeyRequest : RpcAcsRequest<GetSessionAccessKeyResponse>
     {
@@ -58,7 +59,7 @@ namespace Aliyun.Acs.Core.Auth.Sts
             }
         }
 
-        public override GetSessionAccessKeyResponse GetResponse(Core.Transform.UnmarshallerContext unmarshallerContext)
+        public override GetSessionAccessKeyResponse GetResponse(UnmarshallerContext unmarshallerContext)
         {
             return GetSessionAccessKeyResponseUnmarshaller.Unmarshall(unmarshallerContext);
         }

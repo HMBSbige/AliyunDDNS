@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Aliyun.Acs.Core.Utils
+namespace AliyunDDNSWindowsApp.Alicore.Utils
 {
     public static class DateTimeExtensions
     {

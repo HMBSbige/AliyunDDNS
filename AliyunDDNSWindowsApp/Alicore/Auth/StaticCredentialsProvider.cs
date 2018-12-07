@@ -17,9 +17,9 @@
  * under the License.
  */
 
-using Aliyun.Acs.Core.Profile;
+using AliyunDDNSWindowsApp.Alicore.Profile;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class StaticCredentialsProvider : AlibabaCloudCredentialsProvider
     {

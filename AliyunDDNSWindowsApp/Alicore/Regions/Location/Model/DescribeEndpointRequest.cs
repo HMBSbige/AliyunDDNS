@@ -16,12 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Transform;
-using System;
-using Aliyun.Acs.Core.Regions.Location.Transform;
-using Aliyun.Acs.Core.Utils;
 
-namespace Aliyun.Acs.Core.Regions.Location.Model
+using System;
+using AliyunDDNSWindowsApp.Alicore.Transform;
+using AliyunDDNSWindowsApp.Alicore.Utils;
+
+namespace AliyunDDNSWindowsApp.Alicore.Regions.Location.Model
 {
     public class DescribeEndpointRequest : RpcAcsRequest<DescribeEndpointResponse>
     {
@@ -77,7 +77,7 @@ namespace Aliyun.Acs.Core.Regions.Location.Model
             }
         }
 
-        public override DescribeEndpointResponse GetResponse(Core.Transform.UnmarshallerContext unmarshallerContext)
+        public override DescribeEndpointResponse GetResponse(UnmarshallerContext unmarshallerContext)
         {
             return null;
         }

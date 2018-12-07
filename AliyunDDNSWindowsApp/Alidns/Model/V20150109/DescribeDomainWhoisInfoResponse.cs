@@ -16,10 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core;
-using System.Collections.Generic;
 
-namespace Aliyun.Acs.Alidns.Model.V20150109
+using System.Collections.Generic;
+using AliyunDDNSWindowsApp.Alicore;
+
+namespace AliyunDDNSWindowsApp.Alidns.Model.V20150109
 {
 	public class DescribeDomainWhoisInfoResponse : AcsResponse
 	{

@@ -16,16 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Auth;
-using Aliyun.Acs.Core.Exceptions;
-using Aliyun.Acs.Core.Http;
-using Aliyun.Acs.Core.Regions;
-using Aliyun.Acs.Core.Regions.Location;
-using Aliyun.Acs.Core.Utils;
+
 using System;
 using System.Collections.Generic;
+using AliyunDDNSWindowsApp.Alicore.Auth;
+using AliyunDDNSWindowsApp.Alicore.Exceptions;
+using AliyunDDNSWindowsApp.Alicore.Http;
+using AliyunDDNSWindowsApp.Alicore.Regions;
+using AliyunDDNSWindowsApp.Alicore.Regions.Location;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Profile
+namespace AliyunDDNSWindowsApp.Alicore.Profile
 {
     public class DefaultProfile : IClientProfile
     {

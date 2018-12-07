@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class CredentialsBackupCompatibilityAdaptor : Credential
     {

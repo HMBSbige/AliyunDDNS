@@ -16,11 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class ShaHmac256 : ISigner
     {

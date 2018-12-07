@@ -279,7 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Alicore\ChangeLog.txt" />
-    <Content Include="Alicore\Regions\endpoints.xml" />
+    <EmbeddedResource Include="Alicore\Regions\endpoints.xml" />
     <None Include="Resources\huaji.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

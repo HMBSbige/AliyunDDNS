@@ -20,9 +20,8 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using Aliyun.Acs.Core.Auth;
 
-namespace Aliyun.Acs.Core
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class SHA256withRSASigner : Signer
     {

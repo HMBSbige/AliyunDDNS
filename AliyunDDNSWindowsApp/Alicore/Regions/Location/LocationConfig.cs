@@ -18,11 +18,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Aliyun.Acs.Core.Regions.Location
+namespace AliyunDDNSWindowsApp.Alicore.Regions.Location
 {
     class LocationConfig
     {

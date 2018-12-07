@@ -16,10 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- 
+
 using System;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class LegacyCredentials : AlibabaCloudCredentials
     {

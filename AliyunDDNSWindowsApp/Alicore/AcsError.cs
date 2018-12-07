@@ -16,9 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using System;
 
-namespace Aliyun.Acs.Core
+namespace AliyunDDNSWindowsApp.Alicore
 {
     public class AcsError : AcsResponse
     {

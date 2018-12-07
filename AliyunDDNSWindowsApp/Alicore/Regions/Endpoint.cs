@@ -16,11 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Regions.Location.Model;
+
 using System;
 using System.Collections.Generic;
 
-namespace Aliyun.Acs.Core.Regions
+namespace AliyunDDNSWindowsApp.Alicore.Regions
 {
     public class Endpoint
     {

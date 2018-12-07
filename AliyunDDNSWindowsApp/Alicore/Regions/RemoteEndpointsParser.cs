@@ -19,13 +19,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aliyun.Acs.Core.Auth;
-using Aliyun.Acs.Core.Regions.Location;
-using Aliyun.Acs.Core.Regions.Location.Model;
+using AliyunDDNSWindowsApp.Alicore.Auth;
+using AliyunDDNSWindowsApp.Alicore.Regions.Location;
+using AliyunDDNSWindowsApp.Alicore.Regions.Location.Model;
 
-namespace Aliyun.Acs.Core.Regions
+namespace AliyunDDNSWindowsApp.Alicore.Regions
 {
     class RemoteEndpointsParser : IEndpointsProvider
     {

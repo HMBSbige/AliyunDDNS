@@ -19,11 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aliyun.Acs.Core.Profile;
 
-namespace Aliyun.Acs.Core.Utils
+namespace AliyunDDNSWindowsApp.Alicore.Utils
 {
     public class CacheTimeHelper
     {

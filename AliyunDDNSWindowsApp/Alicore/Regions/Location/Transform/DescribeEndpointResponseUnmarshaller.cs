@@ -16,12 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Regions.Location.Model;
-using Aliyun.Acs.Core.Transform;
-using System;
-using System.Collections.Generic;
 
-namespace Aliyun.Acs.Core.Regions.Location.Transform
+namespace AliyunDDNSWindowsApp.Alicore.Regions.Location.Transform
 {
     public class DescribeEndpointResponseUnmarshaller
     {

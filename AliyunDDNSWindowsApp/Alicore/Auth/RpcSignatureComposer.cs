@@ -16,14 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Http;
-using Aliyun.Acs.Core.Utils;
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using AliyunDDNSWindowsApp.Alicore.Http;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class RpcSignatureComposer : ISignatureComposer
     {

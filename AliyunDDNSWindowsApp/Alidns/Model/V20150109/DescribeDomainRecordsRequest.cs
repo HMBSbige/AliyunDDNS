@@ -16,15 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core;
-using Aliyun.Acs.Core.Http;
-using Aliyun.Acs.Core.Transform;
-using Aliyun.Acs.Core.Utils;
-using Aliyun.Acs.Alidns.Transform;
-using Aliyun.Acs.Alidns.Transform.V20150109;
-using System.Collections.Generic;
 
-namespace Aliyun.Acs.Alidns.Model.V20150109
+using AliyunDDNSWindowsApp.Alicore;
+using AliyunDDNSWindowsApp.Alicore.Transform;
+using AliyunDDNSWindowsApp.Alicore.Utils;
+using AliyunDDNSWindowsApp.Alidns.Transform.V20150109;
+
+namespace AliyunDDNSWindowsApp.Alidns.Model.V20150109
 {
     public class DescribeDomainRecordsRequest : RpcAcsRequest<DescribeDomainRecordsResponse>
     {
@@ -153,7 +151,7 @@ namespace Aliyun.Acs.Alidns.Model.V20150109
 			}
 		}
 
-        public override DescribeDomainRecordsResponse GetResponse(Core.Transform.UnmarshallerContext unmarshallerContext)
+        public override DescribeDomainRecordsResponse GetResponse(UnmarshallerContext unmarshallerContext)
         {
             return DescribeDomainRecordsResponseUnmarshaller.Unmarshall(unmarshallerContext);
         }

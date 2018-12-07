@@ -17,7 +17,7 @@
  * under the License.
  */
 
-namespace Aliyun.Acs.Core.Http
+namespace AliyunDDNSWindowsApp.Alicore.Http
 {
     public enum ProtocolType
     {

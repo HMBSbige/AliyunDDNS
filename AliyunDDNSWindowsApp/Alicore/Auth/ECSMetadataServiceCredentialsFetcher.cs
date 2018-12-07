@@ -17,16 +17,16 @@
  * under the License.
  */
 
-using Aliyun.Acs.Core.Exceptions;
-using Aliyun.Acs.Core.Http;
-using Aliyun.Acs.Core.Reader;
-using Aliyun.Acs.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using AliyunDDNSWindowsApp.Alicore.Exceptions;
+using AliyunDDNSWindowsApp.Alicore.Http;
+using AliyunDDNSWindowsApp.Alicore.Reader;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class ECSMetadataServiceCredentialsFetcher
     {

@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Aliyun.Acs.Core.Auth.Sts
+namespace AliyunDDNSWindowsApp.Alicore.Auth.Sts
 {
     public class GetSessionAccessKeyResponse : AcsResponse
     {

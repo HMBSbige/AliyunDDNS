@@ -17,7 +17,7 @@
  * under the License.
  */
 
-namespace Aliyun.Acs.Core.Exceptions
+namespace AliyunDDNSWindowsApp.Alicore.Exceptions
 {
     public enum ErrorType
     {

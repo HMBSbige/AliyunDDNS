@@ -16,15 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using System;
 using System.Collections.Generic;
-using System.Xml;
 using System.IO;
 using System.Reflection;
-using Aliyun.Acs.Core.Auth;
-using Aliyun.Acs.Core.Regions.Location;
+using System.Xml;
+using AliyunDDNSWindowsApp.Alicore.Auth;
+using AliyunDDNSWindowsApp.Alicore.Regions.Location;
 
-namespace Aliyun.Acs.Core.Regions
+namespace AliyunDDNSWindowsApp.Alicore.Regions
 {
     class InternalEndpointsParser : IEndpointsProvider
     {

@@ -16,10 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using System;
 using System.Collections.Generic;
 
-namespace Aliyun.Acs.Core.Transform
+namespace AliyunDDNSWindowsApp.Alicore.Transform
 {
     public class AcsErrorUnmarshaller
     {

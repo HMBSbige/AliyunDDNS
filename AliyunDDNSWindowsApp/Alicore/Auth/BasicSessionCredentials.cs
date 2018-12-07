@@ -18,9 +18,9 @@
  */
 
 using System;
-using Aliyun.Acs.Core.Utils;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class BasicSessionCredentials : AlibabaCloudCredentials
     {

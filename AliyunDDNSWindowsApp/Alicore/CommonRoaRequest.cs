@@ -17,13 +17,10 @@
  * under the License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Aliyun.Acs.Core.Http;
+using AliyunDDNSWindowsApp.Alicore.Http;
+using AliyunDDNSWindowsApp.Alicore.Transform;
 
-namespace Aliyun.Acs.Core
+namespace AliyunDDNSWindowsApp.Alicore
 {
     class CommonRoaRequest : RoaAcsRequest<CommonResponse>
     {
@@ -33,7 +30,7 @@ namespace Aliyun.Acs.Core
             this.AcceptFormat = FormatType.JSON;
         }
 
-        public override CommonResponse GetResponse(Core.Transform.UnmarshallerContext unmarshallerContext)
+        public override CommonResponse GetResponse(UnmarshallerContext unmarshallerContext)
         {
             return null;
         }

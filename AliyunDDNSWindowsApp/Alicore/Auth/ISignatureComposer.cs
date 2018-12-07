@@ -16,11 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Http;
+
 using System;
 using System.Collections.Generic;
+using AliyunDDNSWindowsApp.Alicore.Http;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public interface ISignatureComposer
     {

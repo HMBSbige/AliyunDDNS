@@ -16,12 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Transform;
-using Aliyun.Acs.Alidns.Model.V20150109;
-using System;
-using System.Collections.Generic;
 
-namespace Aliyun.Acs.Alidns.Transform.V20150109
+using AliyunDDNSWindowsApp.Alicore.Transform;
+using AliyunDDNSWindowsApp.Alidns.Model.V20150109;
+
+namespace AliyunDDNSWindowsApp.Alidns.Transform.V20150109
 {
     public class UpdateBatchDomainRecordsResponseUnmarshaller
     {

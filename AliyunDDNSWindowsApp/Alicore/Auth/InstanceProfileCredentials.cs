@@ -18,9 +18,8 @@
  */
 
 using System;
-using System.Globalization;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class InstanceProfileCredentials : BasicSessionCredentials
     {

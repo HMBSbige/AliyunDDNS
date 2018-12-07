@@ -16,9 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 using System;
 
-namespace Aliyun.Acs.Core.Exceptions
+namespace AliyunDDNSWindowsApp.Alicore.Exceptions
 {
     public class ServerException : ClientException
     {

@@ -18,11 +18,11 @@
  */
 
 using System;
-using Aliyun.Acs.Core.Profile;
-using Aliyun.Acs.Core.Auth.Sts;
-using Aliyun.Acs.Core.Utils;
+using AliyunDDNSWindowsApp.Alicore.Auth.Sts;
+using AliyunDDNSWindowsApp.Alicore.Profile;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Auth
+namespace AliyunDDNSWindowsApp.Alicore.Auth
 {
     public class STSAssumeRoleSessionCredentialsProvider : AlibabaCloudCredentialsProvider
     {

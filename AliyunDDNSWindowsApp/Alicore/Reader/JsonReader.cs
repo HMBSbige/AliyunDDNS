@@ -16,12 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-using Aliyun.Acs.Core.Utils;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AliyunDDNSWindowsApp.Alicore.Utils;
 
-namespace Aliyun.Acs.Core.Reader
+namespace AliyunDDNSWindowsApp.Alicore.Reader
 {
     public class JsonReader : IReader
     {
