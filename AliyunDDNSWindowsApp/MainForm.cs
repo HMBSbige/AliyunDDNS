@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AliyunDDNSWindowsApp.Properties;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AliyunDDNSWindowsApp.Properties;
 using Timer = System.Threading.Timer;
 
 namespace AliyunDDNSWindowsApp
@@ -13,8 +13,8 @@ namespace AliyunDDNSWindowsApp
 		public MainForm()
 		{
 			InitializeComponent();
-			Icon = Resources.huaji128;
-			notifyIcon1.Icon = Resources.huaji128;
+			Icon = Resources.huaji;
+			notifyIcon1.Icon = Resources.huaji;
 			ChangeLogBox = UpdateLog;
 			checkBox2.Checked = false;
 			if (!File.Exists(configfile))
@@ -40,6 +40,7 @@ namespace AliyunDDNSWindowsApp
 			}
 			checkBox2.Checked = true;
 		}
+
 		public const string configfile = @"AliyunDDNSconfig.dat";
 		private const string logfile = @"AliyunDDNS.log";
 		private const int second = 1000;
@@ -64,6 +65,7 @@ namespace AliyunDDNSWindowsApp
 				UpdateLogFile(DateTime.Now + "\t" + str);
 			}
 		}
+
 		private void UpdateLogFile(string str)
 		{
 			try
@@ -78,6 +80,7 @@ namespace AliyunDDNSWindowsApp
 			log?.Write(str);
 			log?.Close();
 		}
+
 		private void TriggerMainFormDisplay()
 		{
 			Visible = !Visible;
@@ -113,7 +116,7 @@ namespace AliyunDDNSWindowsApp
 					return;
 				}
 
-				LogBox.Invoke(ChangeLogBox, @"公网 IP: "+ Value + Environment.NewLine);
+				LogBox.Invoke(ChangeLogBox, @"公网 IP: " + Value + Environment.NewLine);
 
 				var SubDomain = RR + @"." + Domain;
 				var lastValue = t1.GetSubDomainARecord(SubDomain);
@@ -248,9 +251,9 @@ namespace AliyunDDNSWindowsApp
 			button1.Enabled = true;
 			TriggerRun_MenuItem.Enabled = true;
 		}
-		
+
 		private delegate void VoidMethod_Delegate();
-		
+
 		private void button3_Click(object sender, EventArgs e)
 		{
 			try
@@ -314,7 +317,7 @@ namespace AliyunDDNSWindowsApp
 				MessageBox.Show(ex.Message, @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
-		
+
 		private void button1_Click(object sender, EventArgs e)
 		{
 			TriggerRun();
