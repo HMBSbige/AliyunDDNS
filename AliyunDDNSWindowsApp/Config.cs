@@ -7,7 +7,7 @@ namespace AliyunDDNSWindowsApp
 	{
 		public static void WriteConfig(string Domain,string RR,string accessKeyId,string accessKeySecret)
 		{
-			using (var bw = new BinaryWriter(File.Open(MainForm.configfile, FileMode.Create), Encoding.UTF8))
+			using (var bw = new BinaryWriter(File.Open(MainForm.configFile, FileMode.Create), Encoding.UTF8))
 			{
 				bw.Write(Domain);
 				bw.Write(RR);

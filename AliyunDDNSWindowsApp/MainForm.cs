@@ -15,33 +15,9 @@ namespace AliyunDDNSWindowsApp
 			InitializeComponent();
 			Icon = Resources.huaji;
 			notifyIcon1.Icon = Resources.huaji;
-			ChangeLogBox = UpdateLog;
-			checkBox2.Checked = false;
-			if (!File.Exists(configfile))
-			{
-				UpdateLog(@"未找到配置文件" + Environment.NewLine);
-			}
-			else
-			{
-				try
-				{
-					var config = Config.ReadConfig(configfile);
-					Domain_Box.Text = config[0];
-					RR_Box.Text = config[1];
-					ID_Box.Text = config[2];
-					Secret_Box.Text = config[3];
-				}
-				catch
-				{
-					UpdateLog(@"读取配置失败！" + Environment.NewLine);
-					return;
-				}
-				UpdateLog(@"读取配置成功！" + Environment.NewLine);
-			}
-			checkBox2.Checked = true;
 		}
 
-		public const string configfile = @"AliyunDDNSconfig.dat";
+		public const string configFile = @"AliyunDDNSconfig.dat";
 		private const string logfile = @"AliyunDDNS.log";
 		private const int second = 1000;
 		private const int minute = 59 * second;
@@ -50,42 +26,22 @@ namespace AliyunDDNSWindowsApp
 		private string accessKeyId, accessKeySecret;
 		private readonly object thisLock = new object();
 
-		private StreamWriter log;
 		private Timer threadTimer;
 
-		private delegate void LogBoxCallBack(string str);
-
-		private readonly LogBoxCallBack ChangeLogBox;
-
-		private void UpdateLog(string str)
+		private void MainForm_Load(object sender, EventArgs e)
 		{
-			LogBox.AppendText(DateTime.Now + "\t" + str);
-			if (checkBox2.Checked)
-			{
-				UpdateLogFile(DateTime.Now + "\t" + str);
-			}
+			LoadConfig();
 		}
 
-		private void UpdateLogFile(string str)
-		{
-			try
-			{
-				log = new StreamWriter(logfile, true, Encoding.UTF8);
-			}
-			catch (Exception)
-			{
-				//MessageBox.Show(@"无法记录日志！" + Environment.NewLine + ex + Environment.NewLine, @"出错了",MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			log?.Write(str);
-			log?.Close();
-		}
+		#region 主窗口显示隐藏
 
 		private void TriggerMainFormDisplay()
 		{
 			Visible = !Visible;
 			if (WindowState == FormWindowState.Minimized)
+			{
 				WindowState = FormWindowState.Normal;
+			}
 		}
 
 		private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -98,10 +54,63 @@ namespace AliyunDDNSWindowsApp
 			TriggerMainFormDisplay();
 		}
 
+		private void MainForm_SizeChanged(object sender, EventArgs e)
+		{
+			if (WindowState != FormWindowState.Minimized)
+			{
+				return;
+			}
+			TriggerMainFormDisplay();
+		}
+
+		#endregion
+
+		#region 退出
+
 		private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			Exit();
+		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				var dr = MessageBox.Show(@"「是」退出，「否」最小化", @"是否退出？", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				if (dr == DialogResult.Yes)
+				{
+					Exit();
+				}
+				else if (dr == DialogResult.No)
+				{
+					e.Cancel = true;
+					TriggerMainFormDisplay();
+				}
+				else
+				{
+					e.Cancel = true;
+				}
+			}
+		}
+
+		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			//TODO
+			if (button1.Text == @"Stop")
+			{
+				StopListen();
+			}
+		}
+
+		private void Exit()
+		{
+			Dispose();
 			Environment.Exit(0);
 		}
+
+		#endregion
+
+		#region StartDDNS
 
 		private void Update(object state)
 		{
@@ -109,44 +118,35 @@ namespace AliyunDDNSWindowsApp
 			{
 				var t1 = new DDNS(accessKeyId, accessKeySecret);
 
-				var Value = DDNS.GetLocalIP(checkBox1.Checked);
-				if (Value == @"0.0.0.0")
+				var ip = Util.GetPublicIp(checkBox1.Checked);
+				if (!Util.IsIPv4Address(ip))
 				{
-					LogBox.Invoke(ChangeLogBox, @"获取公网 IP 出错，解析记录未改变" + Environment.NewLine);
+					UpdateLog(@"获取公网 IP 出错，解析记录未改变");
 					return;
 				}
 
-				LogBox.Invoke(ChangeLogBox, @"公网 IP: " + Value + Environment.NewLine);
+				UpdateLog($@"公网 IP: {ip}");
 
-				var SubDomain = RR + @"." + Domain;
-				var lastValue = t1.GetSubDomainARecord(SubDomain);
-				var lastRecordId = t1.GetSubDomainRecordId(SubDomain);
+				var subDomain = $@"{RR}.{Domain}";
+				var lastIp = t1.GetSubDomainARecord(subDomain);
+				var lastRecordId = t1.GetSubDomainRecordId(subDomain);
 
-				if (lastValue != Value)
+				if (lastIp != ip)
 				{
-					if (t1.UpdateDomainRecord(RR, Domain, Value) == lastRecordId &&
-						t1.GetSubDomainARecord(SubDomain) == Value)
+					if (t1.UpdateDomainRecord(RR, Domain, ip) == lastRecordId && t1.GetSubDomainARecord(subDomain) == ip)
 					{
-						LogBox.Invoke(ChangeLogBox, @"解析记录更改成功:" + lastValue + @" → " + Value + Environment.NewLine);
+						UpdateLog($@"解析记录更改成功:{lastIp} → {ip}");
 					}
 					else
 					{
-						LogBox.Invoke(ChangeLogBox, @"解析记录更改失败，请检查输入是否正确" + Environment.NewLine);
+						UpdateLog(@"解析记录更改失败，请检查输入是否正确");
 					}
-
 				}
 				else
 				{
-					LogBox.Invoke(ChangeLogBox, @"公网 IP 未改变" + Environment.NewLine);
+					UpdateLog(@"公网 IP 未改变");
 				}
 			}
-		}
-
-		private void MainForm_SizeChanged(object sender, EventArgs e)
-		{
-			if (WindowState != FormWindowState.Minimized)
-				return;
-			TriggerMainFormDisplay();
 		}
 
 		private void TriggerRun()
@@ -166,57 +166,13 @@ namespace AliyunDDNSWindowsApp
 			TriggerRun();
 		}
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				Config.WriteConfig(Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text);
-			}
-			catch
-			{
-				LogBox.Invoke(ChangeLogBox, @"保存失败" + Environment.NewLine);
-				return;
-			}
-			LogBox.Invoke(ChangeLogBox, @"保存成功" + Environment.NewLine);
-		}
-
-		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (e.CloseReason == CloseReason.UserClosing)
-			{
-				var dr = MessageBox.Show(@"「是」退出，「否」最小化", @"是否退出？", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-				if (dr == DialogResult.Yes)
-				{
-					Dispose();
-					Application.Exit();
-				}
-				else if (dr == DialogResult.No)
-				{
-					e.Cancel = true;
-					TriggerMainFormDisplay();
-				}
-				else
-				{
-					e.Cancel = true;
-				}
-			}
-		}
-
-		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			if (button1.Text == @"Stop")
-			{
-				StopListen();
-			}
-		}
-
 		private void StopListen()
 		{
 			button1.Enabled = false;
 			TriggerRun_MenuItem.Enabled = false;
 
 			threadTimer?.Dispose();
-			LogBox.Invoke(ChangeLogBox, @"已停止..." + Environment.NewLine);
+			UpdateLog(@"已停止...");
 
 			ID_Box.Enabled = true;
 			Secret_Box.Enabled = true;
@@ -252,24 +208,96 @@ namespace AliyunDDNSWindowsApp
 			TriggerRun_MenuItem.Enabled = true;
 		}
 
-		private delegate void VoidMethod_Delegate();
+		private void button1_Click(object sender, EventArgs e)
+		{
+			TriggerRun();
+		}
+
+		#endregion
+
+		#region Log
+
+		private void UpdateLog(string str)
+		{
+			var sb = $@"{DateTime.Now}	{str}{Environment.NewLine}";
+			LogBox.Invoke(new Action(() => { LogBox.AppendText(sb); }));
+			UpdateLogFile(sb);
+		}
+
+		private static void UpdateLogFile(string str)
+		{
+			File.AppendAllText(logfile, str, Encoding.UTF8);
+		}
+
+		#endregion
+
+		#region Config
+
+		private void LoadConfig()
+		{
+			if (!File.Exists(configFile))
+			{
+				UpdateLog(@"未找到配置文件");
+			}
+			else
+			{
+				try
+				{
+					var config = Config.ReadConfig(configFile);
+					Domain_Box.Text = config[0];
+					RR_Box.Text = config[1];
+					ID_Box.Text = config[2];
+					Secret_Box.Text = config[3];
+				}
+				catch
+				{
+					UpdateLog(@"读取配置失败！");
+					return;
+				}
+
+				UpdateLog(@"读取配置成功！");
+			}
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				Config.WriteConfig(Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text);
+			}
+			catch
+			{
+				UpdateLog(@"保存失败");
+				return;
+			}
+
+			UpdateLog(@"保存成功");
+		}
+
+		#endregion
+
+		#region WindowsService
 
 		private void button3_Click(object sender, EventArgs e)
 		{
 			try
 			{
 				button3.Enabled = false;
-				Task t = new Task(() =>
+				var t = new Task(() =>
 				{
 					Service.ReInstall();
-					Service.AutoStartup(new[] { Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text, Application.StartupPath + @"\" + logfile });
+					Service.AutoStartup(new[]
+					{
+							Domain_Box.Text, RR_Box.Text, ID_Box.Text, Secret_Box.Text,
+							Application.StartupPath + @"\" + logfile
+					});
 					Service.SetRecoveryOptions();
 					Service.Run();
 				});
 				t.Start();
 				t.ContinueWith(task =>
 				{
-					BeginInvoke(new VoidMethod_Delegate(() =>
+					BeginInvoke(new Action(() =>
 					{
 						if (Service.ServiceIsExisted())
 						{
@@ -279,6 +307,7 @@ namespace AliyunDDNSWindowsApp
 						{
 							MessageBox.Show(@"Windows 服务安装失败", @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
+
 						button3.Enabled = true;
 					}));
 				});
@@ -298,7 +327,7 @@ namespace AliyunDDNSWindowsApp
 				t.Start();
 				t.ContinueWith(task =>
 				{
-					BeginInvoke(new VoidMethod_Delegate(() =>
+					BeginInvoke(new Action(() =>
 					{
 						if (!Service.ServiceIsExisted())
 						{
@@ -308,6 +337,7 @@ namespace AliyunDDNSWindowsApp
 						{
 							MessageBox.Show(@"Windows 服务卸载失败", @"出错了", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
+
 						button4.Enabled = true;
 					}));
 				});
@@ -318,9 +348,9 @@ namespace AliyunDDNSWindowsApp
 			}
 		}
 
-		private void button1_Click(object sender, EventArgs e)
-		{
-			TriggerRun();
-		}
+		#endregion
+
+
+
 	}
 }

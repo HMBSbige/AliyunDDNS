@@ -22,6 +22,7 @@ namespace AliyunDDNS_WindowsService
 				logPath = args[4];
 			}
 		}
+
 		private System.Threading.Timer threadTimer;
 		private const int second = 1000;
 		private const int minute = 59 * second;
@@ -32,21 +33,11 @@ namespace AliyunDDNS_WindowsService
 		private string accessKeyId;
 		private string accessKeySecret;
 
-		private StreamWriter log;
 		private string logPath;
 
-		private void UpdateLogFile(string str)
+		private void UpdateLog(string str)
 		{
-			try
-			{
-				log = new StreamWriter(logPath, true, Encoding.UTF8);
-			}
-			catch (Exception)
-			{
-				return;
-			}
-			log?.Write(DateTime.Now + "\t" + str);
-			log?.Close();
+			File.AppendAllText(logPath, str, Encoding.UTF8);
 		}
 
 		private void Update(object state)
@@ -55,42 +46,41 @@ namespace AliyunDDNS_WindowsService
 			{
 				var t1 = new DDNS(accessKeyId, accessKeySecret);
 
-				var Value = DDNS.GetLocalIP(false);
-				if (Value == @"0.0.0.0")
+				var ip = Util.GetPublicIp();
+				if (!Util.IsIPv4Address(ip))
 				{
-					UpdateLogFile(@"获取公网 IP 出错，解析记录未改变" + Environment.NewLine);
+					UpdateLog(@"获取公网 IP 出错，解析记录未改变");
 					return;
 				}
 
-				UpdateLogFile(@"公网 IP: " + Value + Environment.NewLine);
+				UpdateLog($@"公网 IP: {ip}");
 
-				var SubDomain = RR + @"." + Domain;
-				var lastValue = t1.GetSubDomainARecord(SubDomain);
-				var lastRecordId = t1.GetSubDomainRecordId(SubDomain);
+				var subDomain = $@"{RR}.{Domain}";
+				var lastIp = t1.GetSubDomainARecord(subDomain);
+				var lastRecordId = t1.GetSubDomainRecordId(subDomain);
 
-				if (lastValue != Value)
+				if (lastIp != ip)
 				{
-					if (t1.UpdateDomainRecord(RR, Domain, Value) == lastRecordId &&
-						t1.GetSubDomainARecord(SubDomain) == Value)
+					if (t1.UpdateDomainRecord(RR, Domain, ip) == lastRecordId &&
+						t1.GetSubDomainARecord(subDomain) == ip)
 					{
-						UpdateLogFile(@"解析记录更改成功:" + lastValue + @" → " + Value + Environment.NewLine);
+						UpdateLog($@"解析记录更改成功:{lastIp} → {ip}");
 					}
 					else
 					{
-						UpdateLogFile(@"解析记录更改失败，请检查输入是否正确" + Environment.NewLine);
+						UpdateLog(@"解析记录更改失败，请检查输入是否正确");
 					}
-
 				}
 				else
 				{
-					UpdateLogFile(@"公网 IP 未改变" + Environment.NewLine);
+					UpdateLog(@"公网 IP 未改变");
 				}
 			}
 		}
 
 		protected override void OnStart(string[] args)
 		{
-			UpdateLogFile(@"服务启动" + Environment.NewLine);
+			UpdateLog(@"服务启动" + Environment.NewLine);
 			if (args.Length == 5)
 			{
 				Domain = args[0];
@@ -105,7 +95,7 @@ namespace AliyunDDNS_WindowsService
 
 		protected override void OnStop()
 		{
-			UpdateLogFile(@"服务停止" + Environment.NewLine);
+			UpdateLog(@"服务停止" + Environment.NewLine);
 			threadTimer?.Dispose();
 			threadTimer = null;
 		}

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using Aliyun.Acs.Alidns.Model.V20150109;
+﻿using Aliyun.Acs.Alidns.Model.V20150109;
 using Aliyun.Acs.Core;
 using Aliyun.Acs.Core.Profile;
+using System.Collections.Generic;
 
 namespace AliyunDDNSWindowsApp
 {
@@ -55,7 +51,7 @@ namespace AliyunDDNSWindowsApp
 		{
 			var request = new DescribeDomainRecordInfoRequest()
 			{
-				RecordId= RecordID
+				RecordId = RecordID
 			};
 			try
 			{
@@ -64,7 +60,7 @@ namespace AliyunDDNSWindowsApp
 			}
 			catch
 			{
-				return @"";
+				return string.Empty;
 			}
 		}
 
@@ -77,7 +73,7 @@ namespace AliyunDDNSWindowsApp
 		{
 			var request = new DescribeSubDomainRecordsRequest()
 			{
-				SubDomain= SubDomain,
+				SubDomain = SubDomain,
 				PageNumber = 1,
 				PageSize = 1,
 				Type = @"A"
@@ -90,7 +86,7 @@ namespace AliyunDDNSWindowsApp
 			}
 			catch
 			{
-				return @"";
+				return string.Empty;
 			}
 		}
 
@@ -116,7 +112,7 @@ namespace AliyunDDNSWindowsApp
 			}
 			catch
 			{
-				return @"";
+				return string.Empty;
 			}
 		}
 
@@ -127,14 +123,14 @@ namespace AliyunDDNSWindowsApp
 		/// <param name="Domain">域名</param>
 		/// <param name="Value">记录值</param>
 		/// <returns></returns>
-		public string UpdateDomainRecord(string RR, string Domain,string Value)
+		public string UpdateDomainRecord(string RR, string Domain, string Value)
 		{
 			var request = new UpdateDomainRecordRequest()
 			{
-				RecordId = GetSubDomainRecordId(RR+@"."+ Domain),
-				RR =RR,
+				RecordId = GetSubDomainRecordId($@"{RR}.{Domain}"),
+				RR = RR,
 				Type = @"A",
-				Value= Value
+				Value = Value
 			};
 			try
 			{
@@ -143,40 +139,8 @@ namespace AliyunDDNSWindowsApp
 			}
 			catch
 			{
-				return @"";
+				return string.Empty;
 			}
-		}
-
-		/// <summary>
-		/// 获取公网IPv4地址
-		/// </summary>
-		/// <returns>公网IPv4地址点分十进制字符串</returns>
-		public static string GetLocalIP(bool UseProxy)
-		{
-			string IP = @"0.0.0.0";
-			WebRequest wr = WebRequest.Create(@"https://myip.ipip.net/");
-			if (!UseProxy)
-			{
-				wr.Proxy = new WebProxy();
-			}
-			Stream s = wr.GetResponse().GetResponseStream();
-			if (s != null)
-			{
-				StreamReader sr = new StreamReader(s, Encoding.UTF8);
-				IP = sr.ReadToEnd();
-				int start = IP.IndexOf(@"当前 IP：", StringComparison.Ordinal) + 6;
-				int end = IP.IndexOf(@"  来自于：", start, StringComparison.Ordinal);
-				IP = IP.Substring(start, end - start);
-				sr.Close();
-				s.Close();
-			}
-			return IP;
-		}
-
-		public static long Longnullable2long(long? z)
-		{
-			return z.HasValue ? z.GetValueOrDefault() : long.MinValue;
-
 		}
 	}
 }
